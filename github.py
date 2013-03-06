@@ -13,7 +13,7 @@ import json
 
 
 def find_repos(keyword, callback=None):
-    """Print repositories matching the given keyword.
+    """Finds repositories matching the given keyword.
 
     keyword: ''         The keyword to search with.
     callback: f(item)   Do something with each item (eg: print is a pretty handy callback);
@@ -33,7 +33,7 @@ def find_repos(keyword, callback=None):
 
 
 def get_pull_requests(owner, repo, callback=None):
-    """Yields the pull requests for the given repository.
+    """Gets the pull requests for the given repository.
 
     owner: ''           The name of the repository owner.
     repo: ''            The name of the repository.
@@ -50,7 +50,7 @@ def get_pull_requests(owner, repo, callback=None):
 
 
 def get_repos(user, callback=None):
-    """Yields the repositories for the given user.
+    """Gets the repositories for the given user.
 
     user: ''            The name of the user.
     callback: f(item)   Do something with each item (eg: print is a pretty handy callback);
@@ -68,7 +68,7 @@ def get_repos(user, callback=None):
 
 
 def get_user(user):
-    """Returns info for the user.
+    """Gets info for the user.
 
     user: ''    The name of the user.
     """
@@ -85,7 +85,7 @@ def get_user(user):
 
 
 def response_json(path, data_map=lambda d: d, set_root=lambda r: r):
-    """Generator for iterating over JSON response data.
+    """Generator function for iterating over JSON response data.
 
     path: ''            The path to the github API resource.
     data_map: f(data)   Maps the data from one form to another;
@@ -112,7 +112,7 @@ def response_json(path, data_map=lambda d: d, set_root=lambda r: r):
     if not isinstance(data_root, list):
         data_root = [data_root]
 
-    # Iterate and yield mapped data the caller.
+    # Iterate and yield mapped data to the caller.
     for data in data_root:
         yield data_map(data)
 
