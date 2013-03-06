@@ -14,33 +14,6 @@ import gzip
 import json
 
 
-def get_pull_requests(owner, repo, callback=None):
-    """Gets the pull requests for the given repository.
-
-    owner: ''           The name of the repository owner.
-    repo: ''            The name of the repository.
-    callback: f(i)      Do something with each item (eg: print is a pretty handy callback);
-                        by default each item is yielded.
-    """
-
-    path = '/repos/{0}/{1}/pulls'.format(owner, repo)
-    response = get(path)
-    return _yield_to_callback(response, callback)
-
-
-def get_repos(user, callback=None):
-    """Gets the repositories for the given user.
-
-    user: ''            The name of the user.
-    callback: f(i)      Do something with each item (eg: print is a pretty handy callback);
-                        by default each item is yielded.
-    """
-
-    path = '/users/{0}/repos'.format(user)
-    response = get(path)
-    return _yield_to_callback(response, callback)
-
-
 def get(path, offset=None):
     """Generator function for iterating over JSON response data.
 
@@ -70,6 +43,33 @@ def get(path, offset=None):
     # Iterate and yield mapped data to the caller.
     for data in data_root:
         yield data
+
+
+def get_pull_requests(owner, repo, callback=None):
+    """Gets the pull requests for the given repository.
+
+    owner: ''           The name of the repository owner.
+    repo: ''            The name of the repository.
+    callback: f(i)      Do something with each item (eg: print is a pretty handy callback);
+                        by default each item is yielded.
+    """
+
+    path = '/repos/{0}/{1}/pulls'.format(owner, repo)
+    response = get(path)
+    return _yield_to_callback(response, callback)
+
+
+def get_repos(user, callback=None):
+    """Gets the repositories for the given user.
+
+    user: ''            The name of the user.
+    callback: f(i)      Do something with each item (eg: print is a pretty handy callback);
+                        by default each item is yielded.
+    """
+
+    path = '/users/{0}/repos'.format(user)
+    response = get(path)
+    return _yield_to_callback(response, callback)
 
 
 def get_user(user):
