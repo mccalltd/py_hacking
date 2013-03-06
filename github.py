@@ -24,8 +24,8 @@ def get_pull_requests(owner, repo, callback=None):
     """
 
     path = '/repos/{0}/{1}/pulls'.format(owner, repo)
-    response = get_response(path)
-    return yield_to_callback(response, callback)
+    response = get(path)
+    return _yield_to_callback(response, callback)
 
 
 def get_repos(user, callback=None):
@@ -37,15 +37,15 @@ def get_repos(user, callback=None):
     """
 
     path = '/users/{0}/repos'.format(user)
-    response = get_response(path)
-    return yield_to_callback(response, callback)
+    response = get(path)
+    return _yield_to_callback(response, callback)
 
 
-def get_response(path, set_root=None):
+def get(path, offset=None):
     """Generator function for iterating over JSON response data.
 
     path: ''            The path to the github API resource.
-    set_root: f(r)      Navigates to a position on the object graph before yielding;
+    offset: f(r)        Navigates to a position on the object graph before yielding;
                         by default the root is the complete json object.
     """
 
@@ -61,7 +61,7 @@ def get_response(path, set_root=None):
 
     # Parse JSON data and adjust the root of the object graph.
     json_data = json.loads(response.decode())
-    data_root = set_root(json_data) if set_root else json_data
+    data_root = offset(json_data) if offset else json_data
 
     # If the data root is not a list, wrap it so we can have one yield via the iterator.
     if not isinstance(data_root, list):
@@ -79,7 +79,7 @@ def get_user(user):
     """
 
     path = '/users/' + user
-    response = get_response(path)
+    response = get(path)
     return next(response)
 
 
@@ -92,11 +92,11 @@ def search_repos(keyword, callback=None):
     """
 
     path = '/legacy/repos/search/' + keyword
-    response = get_response(path, set_root=lambda r: r['repositories'])
-    return yield_to_callback(response, callback)
+    response = get(path, offset=lambda r: r['repositories'])
+    return _yield_to_callback(response, callback)
 
 
-def yield_to_callback(iterable, callback):
+def _yield_to_callback(iterable, callback):
     """Returns the iterable if no callback is given; otherwise iterates and passes items to callback.
 
     iterable: iterable
