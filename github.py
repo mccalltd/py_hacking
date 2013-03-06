@@ -31,25 +31,25 @@ def get_pull_requests(owner, repo):
     :owner  The name of the repository owner.
     :repo   The name of the repository.
     """
-    return get('/repos/{0}/{1}/pulls'.format(owner, repo))
+    return get('/repos/%s/%s/pulls' % owner, repo)
 
 
 def get_repos(user):
     """Gets the repositories for the given user.
     :user   The name of the user.
     """
-    return get('/users/{0}/repos'.format(user))
+    return get('/users/%s/repos' % user)
 
 
 def get_user(user):
     """Gets info for the user.
     :user   The name of the user.
     """
-    return get('/users/' + user)
+    return get('/users/%s' % user)
 
 
 def search_repos(keyword, callback=None):
     """Finds repositories matching the given keyword.
     :keyword    The keyword to search with.
     """
-    return get('/legacy/repos/search/' + keyword)['repositories']
+    return get('/legacy/repos/search/%s' % keyword)['repositories']
