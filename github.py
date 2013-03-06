@@ -5,6 +5,8 @@ General usage:
     For functions returning multiple results, one of two things happen:
         - If no callback is given:  returns an iterable over the results;
         - If a callback is given:   the results are yielded to the callback; returns None.
+
+TODO: doctest
 """
 
 from urllib.request import urlopen, Request
