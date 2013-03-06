@@ -12,17 +12,14 @@ def get(path):
     """Returns the JSON response data from the requested path.
     :path   The path to the github API resource.
     """
-    # Set up the request object.
     request = Request('https://api.github.com/' + path.lstrip('/'))
     request.add_header('Accept-Encoding', 'gzip')
 
-    # Get the decompressed response.
-    response = None
-    with urlopen(request) as f:
-        response = gzip.decompress(f.read())
+    with urlopen(request) as response:
+        raw = response.read()
+        response_body = gzip.decompress(raw).decode()
 
-    # Parse and return JSON data.
-    return json.loads(response.decode())
+    return json.loads(response_body)
 
 
 def get_pull_requests(owner, repo):
