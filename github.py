@@ -48,7 +48,7 @@ def get_user(user):
     return get('/users/%s' % user)
 
 
-def search_repos(keyword, callback=None):
+def search_repos(keyword):
     """Finds repositories matching the given keyword.
     :keyword    The keyword to search with.
     """
